@@ -21,13 +21,19 @@ Month={:02}&
 txtStationName=London&
 Year={}""".replace("\n", "")
 
+RUN_FROM = '2010-01-01'
+RUN_TO = ''
+
 class DailyWeatherSpider(scrapy.Spider):
     name = "daily_weather_spider"
     allowed_domains = ["climate.weather.gc.ca"]
 
     def start_requests(self):
         today = pd.datetime(datetime.today().year,  datetime.today().month,  datetime.today().day)
-        dates = pd.Series(pd.date_range('2010-01-01', today + pd.offsets.MonthEnd(), freq='M'))
+        dates = pd.Series(
+            pd.date_range(RUN_FROM, 
+            RUN_TO if RUN_TO != '' else today + pd.offsets.MonthEnd(), 
+            freq='M'))
         date_tups = dates.apply(lambda x: (x.year, x.month)).values
         station_tups = list(itertools.product(list(STATIONS.keys()), date_tups))
         # station_tups = [('4789', (2012, 1))] # DEBUG

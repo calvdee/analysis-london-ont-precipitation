@@ -8,6 +8,9 @@
 #     http://doc.scrapy.org/en/latest/topics/settings.html
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
+from datetime import datetime
+
+TODAY = datetime.today()
 
 BOT_NAME = 'ldn-ont-weather-data-crawler'
 
@@ -15,7 +18,7 @@ SPIDER_MODULES = ['webcrawler.spiders']
 NEWSPIDER_MODULE = 'webcrawler.spiders'
 
 # Output configuration
-FEED_URI = '../data/daily_weather_2017_06_29.csv'
+FEED_URI = '../data/../data/scrapy_{}.csv'.format(str(TODAY.date()))
 FEED_FORMAT = 'csv'
 FEED_STORAGES = {'file': 'scrapy.extensions.feedexport.FileFeedStorage'}
 # FEED_EXPORTERS
